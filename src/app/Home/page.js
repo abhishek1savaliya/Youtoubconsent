@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import axios from 'axios';
-import { generatePDF } from '../Pdf/page';
+import { generatePDF } from '../../helper/pdf';
 
 const ConsentForm = () => {
   const [fName, setFName] = useState('');
@@ -23,7 +23,6 @@ const ConsentForm = () => {
     try {
       const formData = { fName, lName, email, consentGiven };
       const response = await axios.post('/api/consent', formData, { headers: { 'Content-Type': 'application/json' } });
-      console.log(response.data);
       generatePDF(fName, lName, response.data.consent.date);
       setFName('');
       setLName('');
