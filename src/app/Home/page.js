@@ -54,7 +54,7 @@ const ConsentForm = () => {
 
       {loading && <div className="loading">Loading...</div>}
 
-      <div class="content">
+      <div className="content">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fName">
@@ -123,7 +123,7 @@ const ConsentForm = () => {
                 </div>
                 <div className="flex justify-end">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-3"
                     onClick={() => { setShowPopup(false); setConsentGiven(false); }}
                   >
                     Close
@@ -141,7 +141,7 @@ const ConsentForm = () => {
           )}
 
           {(!consentGiven && firstTime) && (
-            <div className="text-red-500">Please fill consent.</div>
+            <div className="text-red-500 -mt-4 text-xs mb-3">Please fill consent.</div>
           )}
 
 
