@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import axios from 'axios';
+import { generatePDF } from '../Pdf/page';
 
 const ConsentForm = () => {
   const [fName, setFName] = useState('');
@@ -23,13 +24,13 @@ const ConsentForm = () => {
       const formData = { fName, lName, email, consentGiven };
       const response = await axios.post('/api/consent', formData, { headers: { 'Content-Type': 'application/json' } });
       console.log(response.data);
+      generatePDF(fName, lName, response.data.consent.date);
       setFName('');
       setLName('');
       setEmail('');
       setConsentGiven(false);
       setFirstTime(false)
       setLoading(false)
-
     } catch (err) {
       console.error('Error submitting form:', err);
     } finally {
