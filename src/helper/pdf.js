@@ -1,8 +1,11 @@
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import moment from 'moment';
-import html2pdf from 'html2pdf.js';
 
 export const generatePDF = (firstName, lastName, date) => {
-    const htmlContent = `
+    const parsedDate = moment(date);
+    const formattedDate = parsedDate.format('DD/MM/YYYY hh:mm:ss A');
+    const content = `
     <div id="content-to-convert" class="bg-white" style="background-color: #ffffff;">
     <div class="container mx-auto px-4 py-8">
         <div class="container mx-auto p-5 header-container" style="margin: 0 auto; padding: 20px;">
@@ -24,27 +27,35 @@ export const generatePDF = (firstName, lastName, date) => {
                 <li class="mb-2" style="margin-bottom: 0.5rem; font-size: 0.875rem; color: #673AB7;">Your interactions should be constructive and contribute positively to the community.</li>
                 <li class="mb-2" style="margin-bottom: 0.5rem; font-size: 0.875rem; color: #673AB7;">We reserve the right to remove any user-generated content or comments that violate these terms and conditions.</li>
             </ol>
-            <p style="font-size: 0.875rem; margin-bottom: 0;">By participating in our channel on ${moment(date).format('MMMM DD, YYYY')}, you acknowledge that you have read and understood these terms and agree to abide by them.</p>
+            <p style="font-size: 0.875rem; margin-bottom: 0;">By participating in our channel on ${formattedDate}, you acknowledge that you have read and understood these terms and agree to abide by them.</p>
         </div>
         <hr style="border-top: 1px solid #ccc; margin-top: 20px; margin-bottom: 20px;">
     </div>
-</div>
+    </div>
+    `;
 
-`;
+    const container = document.createElement('div');
+    container.innerHTML = content;
+    document.body.appendChild(container);
 
-    const element = document.createElement('div');
-    element.innerHTML = htmlContent;
+    html2canvas(container)
+        .then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 210;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let position = 0;
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            pdf.save('terms_and_conditions.pdf');
 
-    const opt = {
-        margin: 10,
-    };
+            container.style.display = 'none';
 
-    html2pdf()
-        .set(opt)
-        .from(element)
-        .toPdf()
-        .get('pdf')
-        .then((pdf) => {
-            pdf.save('download.pdf');
+        })
+        .catch((error) => {
+            console.error('Error generating PDF:', error);
         });
 };
+
+
+
+
