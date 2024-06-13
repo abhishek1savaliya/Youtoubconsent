@@ -32,7 +32,7 @@ const ConsentForm = () => {
     try {
       const formData = { fName, lName, email, consentGiven };
       const response = await axios.post('/api/consent', formData, { headers: { 'Content-Type': 'application/json' } });
-      generatePDF(fName, lName, response.data.consent.date);
+      await generatePDF(fName, lName, response.data.consent.date);
       setFName('');
       setLName('');
       setEmail('');
