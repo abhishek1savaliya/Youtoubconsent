@@ -10,9 +10,9 @@ export const generatePDF = async (firstName, lastName, date) => {
         const content = `
         <div id="content-to-convert" class="bg-white">
         <div class="container mx-auto px-4 py-8">
-            <div class="container mx-auto p-5 header-container">
-                <a class="header-logo" href="/" class="text-red-500 inline-block mb-2">
-                    <img src="https://cdn3.iconfinder.com/data/icons/social-network-30/512/social-06-512.png" alt="YouTube Logo" class="w-12 h-12 header-logo">
+            <div class="container mx-auto p-5 header-container flex items-center">
+                <a href="/" class="header-logo mr-4">
+                    <img src="https://cdn3.iconfinder.com/data/icons/social-network-30/512/social-06-512.png" alt="YouTube Logo" class="w-12 h-12">
                 </a>
                 <span class="text-lg font-semibold mb-4">
                     <span class="text-red-500">Channel Name:</span> 
@@ -33,7 +33,8 @@ export const generatePDF = async (firstName, lastName, date) => {
             </div>
             <hr class="border-t border-gray-300 my-5">
         </div>
-    </div>    
+    </div>
+    
         `;
 
         const contentElement = document.createElement('div');
